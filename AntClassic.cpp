@@ -100,7 +100,8 @@ void AntClassic::saveMinWayAndRestartSwarm() {
 			minIndex = i;
 		}
 
-	minWayLength = min;
+	if(minWayLength == 0 || minWayLength == -1 || minWayLength > min)
+		minWayLength = min;
 	for (int i = 0; i < N; i++)
 		orderOfCitiesWithMinWayLength[i] = swarmOfAnts[minIndex].orderOfVisitedCities[i];
 
@@ -154,12 +155,15 @@ void AntClassic::start(int limitOfSwarmIterations) {
 		vaporizePheromones();
 		spreadPheromones();
 		saveMinWayAndRestartSwarm();
+		/*if (limitOfSwarmIterations % 100 == 1) {
+			std::cout << minWayLength << std::endl;
+		}*/
 	}
 }
 
 void AntClassic::printMinWay() {
 	std::cout << "Length of shortest way is " << minWayLength << std::endl << "Order of cities:";
 	for (int i = 0; i < N; i++) {
-		std::cout << " " << orderOfCitiesWithMinWayLength[i + 1];
+		std::cout << " " << orderOfCitiesWithMinWayLength[i] + 1;
 	}
 }
